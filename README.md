@@ -21,4 +21,5 @@ local server:
 ```
 $ rails server
 ```
+# INSERT RAILS SHORTCUT IMAGE
 ___
