@@ -1,4 +1,5 @@
 # Sample App
+[Heroku](https://powerful-waters-62992.herokuapp.com/)
 ___
 ## Getting started
 To get started with the app, clone the repo and then install
