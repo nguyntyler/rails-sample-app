@@ -97,3 +97,4 @@ In this code `<title><%= yield(:title) %> | Ruby on Rails Tutorial Sample App</t
 > `<% ... %>` *executes* the code inside.
 
 > `<%= ... %>` executes and *inserts* the result into the template.
+
