@@ -97,4 +97,28 @@ In this code `<title><%= yield(:title) %> | Ruby on Rails Tutorial Sample App</t
 > `<% ... %>` *executes* the code inside.
 
 > `<%= ... %>` executes and *inserts* the result into the template.
+___
+### Helpers
+Helpers allow us to have conditional renders. Inside `app > helpers > application_helpers.rb`, we can write a function that will return something.
+```ruby
+def full_title(page_title = '')
+  base_title = "Ruby on Rails Tutorial Sample App"
+  if page_title.empty?
+    base_title
+  else
+    page_title + " | " + base_title
+  end
+end
+```
+In this case, the function `full_title`, when given a page_title as a parameter, will return one thing or another. 
 
+Using `yield` from before, we can use `:title` as the parameter.
+Instead of...
+```
+<title><%= yield(:title) | Ruby on Rails Tutorial Sample App</title> 
+```
+We can have...
+```
+<title><%= full_title(yield(:title)) %></title>
+```
+Now, in the case that a `:title` is not given, it will default to the base title. 
