@@ -46,3 +46,54 @@ Rails.application.routes.draw do
   get 'static_pages/help'
 end
 ```
+___
+## Testing
+Rails has built in testing. By default, when creating controllers, rails provides a file for testing under 
+> test > controllers > static_pages_controller_test.rb
+```ruby
+test "should get home" do
+  get static_pages_home_url
+  assert_response :success
+  assert_select 'title', 'Home | Ruby on Rails Tutorial Sample App'
+end
+```
+When destructuring this test:
+- `get static_pages_home_url` Tries to go to the url site /static_pages/home.
+- `assert_response :success` is the first test that makes sure the route can be reached.
+- `assert_select 'title', 'Home | Ruby on Rails Tutorial Sample App'` tests if the title in the reached url has a title of 'Home | Ruby on Rails Tutorial Sample App'.
+
+If this is done multiple times, the portion `Ruby on Rails Tutorial Sample App` is duplicated. We can set that to a variable and interpolate it to keep it dry.
+```ruby
+def setup
+  @base_title = 'Ruby on Rails Tutorial Sample App'
+end
+test "should get home" do
+  get static_pages_home_url
+  assert_response :success
+  assert_select 'title', "Home | #{@base_title}"
+end
+```
+The function `setup` is ran before every test.
+___
+### ERB (Embedded Ruby)
+```
+<% provide(:title, "Home") %>
+<!DOCTYPE html> <html>
+<head>
+<title><%= yield(:title) %> | Ruby on Rails Tutorial Sample App</title>
+</head> 
+    <body>
+        <h1>Sample App</h1> 
+        <p>
+        This is the home page for the
+        <a href="https://www.railstutorial.org/">Ruby on Rails Tutorial</a>
+        sample application.
+        </p> 
+    </body>
+</html>
+```
+Here, the code `<% provide(:title, "Home") %>` indicates using **<% ... %>** that Rails should call the provide function and associate the string **"Home"** with the label **:title**. Then, in the title, we use the closely related notation **<%= ... %>** to insert the title into the template using Ruby’s **yield** function
+In this code `<title><%= yield(:title) %> | Ruby on Rails Tutorial Sample App</title>`, the use of **<%= ... %>** differs from the one before in that,
+> `<% ... %>` *executes* the code inside.
+
+> `<%= ... %>` executes and *inserts* the result into the template.
